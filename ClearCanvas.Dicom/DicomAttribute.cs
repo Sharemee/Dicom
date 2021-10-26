@@ -66,7 +66,7 @@ namespace ClearCanvas.Dicom
 
         public abstract bool IsNull { get; }
         public abstract bool IsEmpty { get; }
-        public abstract Object Values { get; set; }
+        public abstract object Values { get; set; }
         public abstract DicomAttribute Copy();
 
         public abstract Type GetValueType();

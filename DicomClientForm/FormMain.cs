@@ -43,8 +43,10 @@ namespace DicomClientForm
             foreach (var item in df.DataSet)
             {
                 string desc = item.DicomTagDescription;
-                string value = item.Values.ToString();
+                string value = item.GetString(0, string.Empty);
                 Console.WriteLine($"Desc: {desc}\t\t\t{value}");
+
+                Console.WriteLine(item.Tag.Name); 
             }
         }
     }

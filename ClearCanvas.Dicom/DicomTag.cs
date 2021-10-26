@@ -225,7 +225,7 @@ namespace ClearCanvas.Dicom
         /// <param name="vmLow"></param>
         /// <param name="vmHigh"></param>
         /// <param name="isRetired"></param>
-        public DicomTag(uint tag, String name, String varName, DicomVr vr, bool isMultiVrTag, uint vmLow, uint vmHigh, bool isRetired)
+        public DicomTag(uint tag, string name, string varName, DicomVr vr, bool isMultiVrTag, uint vmLow, uint vmHigh, bool isRetired)
         {
             TagValue = tag;
             _name = name;
@@ -237,7 +237,7 @@ namespace ClearCanvas.Dicom
             _isRetired = isRetired;
         }
 
-        private DicomTag(uint tag, String name)
+        private DicomTag(uint tag, string name)
         {
             TagValue = tag;
             _name = name;
@@ -255,28 +255,22 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Gets the Group Number of the tag as a 16-bit unsigned integer.
         /// </summary>
-        public ushort Group
-        {
-            get { return (ushort)((TagValue & 0xffff0000) >> 16); }
-        }
+        public ushort Group => (ushort)((TagValue & 0xffff0000) >> 16);
 
         /// <summary>
         /// Gets the Element Number of the tag as a 16-bit unsigned integer.
         /// </summary>
-        public ushort Element
-        {
-            get { return (ushort)(TagValue & 0x0000ffff); }
-        }
+        public ushort Element => (ushort)(TagValue & 0x0000ffff);
 
         /// <summary>
         /// Gets a text description of the tag.
         /// </summary>
-        public String Name => _name;
+        public string Name => _name;
 
         /// <summary>
         /// Gets a text description of the tag with spaces removed and proper .NET casing.
         /// </summary>
-        public String VariableName => _varName;
+        public string VariableName => _varName;
 
         /// <summary>
         /// Gets a boolean telling if the tag is retired.
@@ -340,10 +334,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Returns a bool as true if the tag is private
         /// </summary>
-        public bool IsPrivate
-        {
-            get { return (Group & 1) == 1; }
-        }
+        public bool IsPrivate => (Group & 1) == 1;
 
         #endregion
 
@@ -354,10 +345,7 @@ namespace ClearCanvas.Dicom
         /// Group and Element number of the tag.
         /// </summary>
         /// <returns>The Group and Element number as a 32-bit integer.</returns>
-        public override int GetHashCode()
-        {
-            return ((int)TagValue);
-        }
+        public override int GetHashCode() => (int)TagValue;
 
         /// <summary>
         /// Provides a human-readable representation of the tag.
@@ -384,7 +372,7 @@ namespace ClearCanvas.Dicom
             if (null == otherTag)
                 return false;
 
-            return (otherTag.GetHashCode() == GetHashCode());
+            return otherTag.GetHashCode() == GetHashCode();
         }
 
         #endregion
@@ -394,10 +382,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Implicit cast to a String object, for ease of use.
         /// </summary>
-        public static implicit operator string(DicomTag myTag)
-        {
-            return myTag.ToString();
-        }
+        public static implicit operator string(DicomTag myTag) => myTag.ToString();
 
         /// <summary>
         /// Equality operator.

@@ -97,9 +97,8 @@ namespace ClearCanvas.Dicom
         /// <param name="element">The Element for the tag.</param>
         public static DicomTag GetTag(ushort group, ushort element)
         {
-            DicomTag dicomTag;
             var tagValue = GetTagValue(group, element);
-            if (DicomTagDictionary.TagDictionary.TryGetValue(tagValue, out dicomTag)) return dicomTag;
+            if (DicomTagDictionary.TagDictionary.TryGetValue(tagValue, out DicomTag dicomTag)) return dicomTag;
 
             if (element == 0)
                 return CreateGroupLengthTag(group);
@@ -181,7 +180,7 @@ namespace ClearCanvas.Dicom
         public static DicomTag CreateGroupLengthTag(ushort group)
         {
             // group length is retired for use in the data set (i.e. group >= 8)
-            return new DicomTag(((uint)group << 16), "Group Length", "GroupLength", DicomVr.ULvr, false, 1, 1, group >= 8);
+            return new DicomTag((uint)group << 16, "Group Length", "GroupLength", DicomVr.ULvr, false, 1, 1, group >= 8);
         }
 
         /// <summary>(fffe,e0dd) VR= Sequence Delimitation Item</summary>

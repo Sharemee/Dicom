@@ -38,7 +38,6 @@ namespace ClearCanvas.Dicom.Iod
         private readonly string _explanation;
 
         private int _minOutputValue;
-        private int _maxOutputValue;
 
         #endregion
 
@@ -61,7 +60,7 @@ namespace ClearCanvas.Dicom.Iod
             _data = data;
             _explanation = explanation ?? "";
             _minOutputValue = minOutputValue;
-            _maxOutputValue = maxOutputValue;
+            MaxOutputValue = maxOutputValue;
         }
 
         public DataLut(DataLut item)
@@ -124,11 +123,7 @@ namespace ClearCanvas.Dicom.Iod
             protected set { _minOutputValue = value; }
         }
 
-        public int MaxOutputValue
-        {
-            get { return _maxOutputValue; }
-            protected set { _maxOutputValue = value; }
-        }
+        public int MaxOutputValue { get; protected set; }
 
         #endregion
 

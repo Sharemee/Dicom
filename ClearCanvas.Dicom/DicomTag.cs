@@ -257,7 +257,7 @@ namespace ClearCanvas.Dicom
         /// </summary>
         public ushort Group
         {
-            get { return ((ushort)((TagValue & 0xffff0000) >> 16)); }
+            get { return (ushort)((TagValue & 0xffff0000) >> 16); }
         }
 
         /// <summary>
@@ -291,26 +291,17 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Returns a <see cref="DicomVr"/> object representing the Value Representation (VR) of the tag.
         /// </summary>
-        public DicomVr VR
-        {
-            get { return _vr; }
-        }
+        public DicomVr VR => _vr;
 
         /// <summary>
         /// Gets a uint representing the low Value of Multiplicity defined by DICOM for the tag. 
         /// </summary>
-        public uint VMLow
-        {
-            get { return _vmLow; }
-        }
+        public uint VMLow => _vmLow;
 
         /// <summary>
         /// Gets a uint representing the high Value of Multiplicity defined by DICOM for the tag.
         /// </summary>
-        public uint VMHigh
-        {
-            get { return _vmHigh; }
-        }
+        public uint VMHigh => _vmHigh;
 
         /// <summary>
         /// Gets a string representing the value of multiplicity defined by DICOM for the tag.
@@ -341,7 +332,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Returns a string with the tag value in Hex
         /// </summary>
-        public String HexString
+        public string HexString
         {
             get { return TagValue.ToString("X8"); }
         }

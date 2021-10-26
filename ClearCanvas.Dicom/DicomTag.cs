@@ -265,40 +265,28 @@ namespace ClearCanvas.Dicom
         /// </summary>
         public ushort Element
         {
-            get { return ((ushort)(TagValue & 0x0000ffff)); }
+            get { return (ushort)(TagValue & 0x0000ffff); }
         }
 
         /// <summary>
         /// Gets a text description of the tag.
         /// </summary>
-        public String Name
-        {
-            get { return _name; }
-        }
+        public String Name => _name;
 
         /// <summary>
         /// Gets a text description of the tag with spaces removed and proper .NET casing.
         /// </summary>
-        public String VariableName
-        {
-            get { return _varName; }
-        }
+        public String VariableName => _varName;
 
         /// <summary>
         /// Gets a boolean telling if the tag is retired.
         /// </summary>
-        public bool Retired
-        {
-            get { return _isRetired; }
-        }
+        public bool Retired => _isRetired;
 
         /// <summary>
         /// Gets a boolean telling if the tag supports multiple VRs.
         /// </summary>
-        public bool MultiVR
-        {
-            get { return _multiVrTag; }
-        }
+        public bool MultiVR => _multiVrTag;
 
         /// <summary>
         /// Returns a <see cref="DicomVr"/> object representing the Value Representation (VR) of the tag.

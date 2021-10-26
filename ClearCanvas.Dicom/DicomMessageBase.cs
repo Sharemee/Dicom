@@ -46,19 +46,12 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// The Meta information for the message.
         /// </summary>
-        public DicomAttributeCollection MetaInfo
-        {
-            get;
-            internal set;
-        }
+        public DicomAttributeCollection MetaInfo { get; internal set; }
 
         /// <summary>
         /// The DataSet for the message.
         /// </summary>
-        public DicomAttributeCollection DataSet
-        {
-            get; internal set;
-        }
+        public DicomAttributeCollection DataSet { get; internal set; }
 
         public void ChangeTransferSyntax(TransferSyntax newTransferSyntax)
         {
@@ -86,8 +79,7 @@ namespace ClearCanvas.Dicom
                 if (parameters == null)
                     parameters = DicomCodecRegistry.GetCodecParameters(newTransferSyntax, DataSet);
 
-                DicomAttribute pixelData;
-                if (DataSet.TryGetAttribute(DicomTags.PixelData, out pixelData))
+                if (DataSet.TryGetAttribute(DicomTags.PixelData, out DicomAttribute pixelData))
                 {
                     if (pixelData.IsNull)
                         throw new DicomCodecException("Sop pixel data has no valid value and cannot be compressed.");
@@ -126,11 +118,9 @@ namespace ClearCanvas.Dicom
                 {
                     //A bit cheap, but check for basic image attributes - if any exist
                     // and are non-empty, there should probably be pixel data too.
-                    DicomAttribute spectroscopyData;
-                    if (!DataSet.TryGetAttribute(DicomTags.SpectroscopyData, out spectroscopyData))
+                    if (!DataSet.TryGetAttribute(DicomTags.SpectroscopyData, out DicomAttribute spectroscopyData))
                     {
-                        DicomAttribute attribute;
-                        if (DataSet.TryGetAttribute(DicomTags.Rows, out attribute) && !attribute.IsNull)
+                        if (DataSet.TryGetAttribute(DicomTags.Rows, out DicomAttribute attribute) && !attribute.IsNull)
                             throw new DicomCodecException(
                                 "Suspect Sop appears to be an image (Rows is non-empty), but has no pixel data.");
 
@@ -157,8 +147,7 @@ namespace ClearCanvas.Dicom
                         parameters = DicomCodecRegistry.GetCodecParameters(TransferSyntax, DataSet);
                 }
 
-                DicomAttribute pixelData;
-                if (DataSet.TryGetAttribute(DicomTags.PixelData, out pixelData))
+                if (DataSet.TryGetAttribute(DicomTags.PixelData, out DicomAttribute pixelData))
                 {
                     if (pixelData.IsNull)
                         throw new DicomCodecException("Sop pixel data has no valid value and cannot be decompressed.");
@@ -179,12 +168,10 @@ namespace ClearCanvas.Dicom
                 }
                 else
                 {
-                    DicomAttribute spectroscopyData;
-                    if (!DataSet.TryGetAttribute(DicomTags.SpectroscopyData, out spectroscopyData))
+                    if (!DataSet.TryGetAttribute(DicomTags.SpectroscopyData, out DicomAttribute spectroscopyData))
                     {
                         //NOTE: doing this for consistency, really.
-                        DicomAttribute attribute;
-                        if (DataSet.TryGetAttribute(DicomTags.Rows, out attribute) && !attribute.IsNull)
+                        if (DataSet.TryGetAttribute(DicomTags.Rows, out DicomAttribute attribute) && !attribute.IsNull)
                             throw new DicomCodecException(
                                 "Suspect Sop appears to be an image (Rows is non-empty), but has no pixel data.");
 
@@ -301,9 +288,7 @@ namespace ClearCanvas.Dicom
                 var result = new DicomAttributeComparisonResult
                 {
                     ResultType = ComparisonResultType.InvalidType,
-                    Details =
-                                         String.Format("Comparison object is invalid type: {0}",
-                                                       obj.GetType())
+                    Details = $"Comparison object is invalid type: {obj.GetType()}",
                 };
                 comparisonResults.Add(result);
 

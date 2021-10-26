@@ -51,6 +51,31 @@ namespace ClearCanvas.Dicom
         #region Constructors
 
         /// <summary>
+        /// Create a new empty DICOM Part 10 format file.
+        /// </summary>
+        public DicomFile()
+        {
+            MetaInfo = new DicomAttributeCollection(0x00020000, 0x0002FFFF);
+            DataSet = new DicomAttributeCollection(0x00040000, 0xFFFFFFFF);
+
+            ImplementationVersionName = DicomImplementation.Version;
+            ImplementationClassUid = DicomImplementation.ClassUID.UID;
+            MetaInfo[DicomTags.TransferSyntaxUid].SetStringValue(TransferSyntax.ExplicitVrLittleEndian.UidString);
+            MetaInfo[DicomTags.FileMetaInformationVersion].Values = new byte[] { 0x00, 0x01 };
+
+            //_filename = string.Empty;
+        }
+
+        /// <summary>
+        /// Create a new empty DICOM Part 10 format file.
+        /// </summary>
+        /// <param name="filename"></param>
+        public DicomFile(string filename) : this()
+        {
+            _filename = filename;
+        }
+
+        /// <summary>
         /// Create a DicomFile instance from existing MetaInfo and DataSet.
         /// </summary>
         /// <param name="filename">The name for the file.</param>
@@ -73,39 +98,6 @@ namespace ClearCanvas.Dicom
 
             if (!MetaInfo.Contains(DicomTags.FileMetaInformationVersion))
                 MetaInfo[DicomTags.FileMetaInformationVersion].Values = new byte[] { 0x00, 0x01 };
-        }
-
-        /// <summary>
-        /// Create a new empty DICOM Part 10 format file.
-        /// </summary>
-        /// <param name="filename"></param>
-        public DicomFile(string filename)
-        {
-            MetaInfo = new DicomAttributeCollection(0x00020000, 0x0002FFFF);
-            DataSet = new DicomAttributeCollection(0x00040000, 0xFFFFFFFF);
-
-            ImplementationVersionName = DicomImplementation.Version;
-            ImplementationClassUid = DicomImplementation.ClassUID.UID;
-            MetaInfo[DicomTags.TransferSyntaxUid].SetStringValue(TransferSyntax.ExplicitVrLittleEndian.UidString);
-            MetaInfo[DicomTags.FileMetaInformationVersion].Values = new byte[] { 0x00, 0x01 };
-
-            _filename = filename;
-        }
-
-        /// <summary>
-        /// Create a new empty DICOM Part 10 format file.
-        /// </summary>
-        public DicomFile()
-        {
-            MetaInfo = new DicomAttributeCollection(0x00020000, 0x0002FFFF);
-            DataSet = new DicomAttributeCollection(0x00040000, 0xFFFFFFFF);
-
-            ImplementationVersionName = DicomImplementation.Version;
-            ImplementationClassUid = DicomImplementation.ClassUID.UID;
-            MetaInfo[DicomTags.TransferSyntaxUid].SetStringValue(TransferSyntax.ExplicitVrLittleEndian.UidString);
-            MetaInfo[DicomTags.FileMetaInformationVersion].Values = new byte[] { 0x00, 0x01 };
-
-            _filename = string.Empty;
         }
 
         /// <summary>
@@ -162,9 +154,9 @@ namespace ClearCanvas.Dicom
         /// <remarks>
         /// This property sets/gets the filename associated with the file.
         /// </remarks>
-        public String Filename
+        public string Filename
         {
-            get { return _filename; }
+            get => _filename;
             set
             {
                 _filename = value;
@@ -302,6 +294,8 @@ namespace ClearCanvas.Dicom
         #endregion
 
         #region Public Methods
+
+        #region Load Methods
 
         /// <summary>
         /// Load a DICOM file with the default <see cref="DicomReadOptions"/> set.
@@ -506,6 +500,8 @@ namespace ClearCanvas.Dicom
             Platform.CheckForNullReference(stream, "stream");
             LoadCore(stream, null, stopTag, options);
         }
+
+        #endregion
 
         private void LoadCore(Stream stream, DicomStreamOpener streamOpener, DicomTag stopTag, DicomReadOptions options)
         {

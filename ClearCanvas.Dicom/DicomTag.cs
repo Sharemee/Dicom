@@ -394,7 +394,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Implicit cast to a String object, for ease of use.
         /// </summary>
-        public static implicit operator String(DicomTag myTag)
+        public static implicit operator string(DicomTag myTag)
         {
             return myTag.ToString();
         }
@@ -404,9 +404,9 @@ namespace ClearCanvas.Dicom
         /// </summary>
         public static bool operator ==(DicomTag t1, DicomTag t2)
         {
-            if ((object)t1 == null && (object)t2 == null)
+            if (t1 is null && t2 is null)
                 return true;
-            if ((object)t1 == null || (object)t2 == null)
+            if (t1 is null || t2 is null)
                 return false;
             return t1.TagValue == t2.TagValue;
         }
@@ -414,10 +414,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Not equal operator.
         /// </summary>
-        public static bool operator !=(DicomTag t1, DicomTag t2)
-        {
-            return !(t1 == t2);
-        }
+        public static bool operator !=(DicomTag t1, DicomTag t2) => !(t1 == t2);
 
         /// <summary>
         /// Less than operator.
@@ -436,10 +433,7 @@ namespace ClearCanvas.Dicom
         /// <summary>
         /// Greater than operator.
         /// </summary>
-        public static bool operator >(DicomTag t1, DicomTag t2)
-        {
-            return !(t1 < t2);
-        }
+        public static bool operator >(DicomTag t1, DicomTag t2) => !(t1 < t2);
 
         /// <summary>
         /// Less than or equal to operator.

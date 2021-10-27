@@ -48,23 +48,17 @@ namespace ClearCanvas.Dicom
     public partial class SopClass : IEquatable<SopClass>
     {
         private static readonly object _updateLock = new object();
-        private static Dictionary<String, SopClass> _sopList = new Dictionary<String, SopClass>();
+        private static Dictionary<string, SopClass> _sopList = new Dictionary<string, SopClass>();
 
-        private readonly String _sopName;
-        private readonly String _sopUid;
+        private readonly string _sopName;
+        private readonly string _sopUid;
         private readonly SopClassCategory _category;
 
         /// <summary> Property that represents the Name of the SOP Class. </summary>
-        public String Name
-        {
-            get { return _sopName; }
-        }
+        public string Name => _sopName;
 
         /// <summary> Property that represents the Uid for the SOP Class. </summary>
-        public String Uid
-        {
-            get { return _sopUid; }
-        }
+        public string Uid => _sopUid;
 
         /// <summary> Property that returns a DicomUid that represents the SOP Class. </summary>
         public DicomUid DicomUid
@@ -96,15 +90,11 @@ namespace ClearCanvas.Dicom
 
         /// <summary> Constructor to create SopClass object. </summary>
         [Obsolete("Use the constructor that takes a SopClassCategory instead.")]
-        public SopClass(String name,
-                        String uid,
-                        bool isMeta)
+        public SopClass(string name, string uid, bool isMeta)
             : this(name, uid, isMeta ? SopClassCategory.Meta : SopClassCategory.Uncategorized) { }
 
         /// <summary> Constructor to create SopClass object. </summary>
-        public SopClass(String name,
-                        String uid,
-                        SopClassCategory category)
+        public SopClass(string name, string uid, SopClassCategory category)
         {
             _sopName = name;
             _sopUid = uid;
@@ -127,20 +117,11 @@ namespace ClearCanvas.Dicom
         }
 
         /// <summary>Override that displays the name of the SOP Class.</summary>
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
-        public static bool operator ==(SopClass x, SopClass y)
-        {
-            return Equals(x, y);
-        }
+        public static bool operator ==(SopClass x, SopClass y) => Equals(x, y);
 
-        public static bool operator !=(SopClass x, SopClass y)
-        {
-            return !Equals(x, y);
-        }
+        public static bool operator !=(SopClass x, SopClass y) => !Equals(x, y);
 
         /// <summary>
         /// Gets a list of all the registered SOP Classes.
@@ -152,7 +133,7 @@ namespace ClearCanvas.Dicom
         }
 
         /// <summary>Retrieve a SopClass object associated with the Uid.</summary>
-        public static SopClass GetSopClass(String uid)
+        public static SopClass GetSopClass(string uid)
         {
             SopClass theSop;
             if (!_sopList.TryGetValue(uid, out theSop))

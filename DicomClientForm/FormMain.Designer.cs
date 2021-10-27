@@ -30,6 +30,7 @@ namespace DicomClientForm
         private void InitializeComponent()
         {
             this.BtnLoad = new System.Windows.Forms.Button();
+            this.BtnCreateDicom = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnLoad
@@ -43,11 +44,23 @@ namespace DicomClientForm
             this.BtnLoad.UseVisualStyleBackColor = true;
             this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
+            // BtnCreateDicom
+            // 
+            this.BtnCreateDicom.AutoSize = true;
+            this.BtnCreateDicom.Location = new System.Drawing.Point(124, 22);
+            this.BtnCreateDicom.Name = "BtnCreateDicom";
+            this.BtnCreateDicom.Size = new System.Drawing.Size(111, 22);
+            this.BtnCreateDicom.TabIndex = 1;
+            this.BtnCreateDicom.Text = "使用图片生成影像";
+            this.BtnCreateDicom.UseVisualStyleBackColor = true;
+            this.BtnCreateDicom.Click += new System.EventHandler(this.BtnCreateDicom_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnCreateDicom);
             this.Controls.Add(this.BtnLoad);
             this.Name = "FormMain";
             this.Text = "Form1";
@@ -60,6 +73,7 @@ namespace DicomClientForm
         #endregion
 
         private System.Windows.Forms.Button BtnLoad;
+        private System.Windows.Forms.Button BtnCreateDicom;
     }
 }
 

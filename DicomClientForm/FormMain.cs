@@ -15,25 +15,27 @@ namespace DicomClientForm
 {
     public partial class FormMain : Form
     {
+        private Bitmap bmp;
         private readonly DirectoryInfo di;
+        private readonly List<FileInfo> files;
         public FormMain()
         {
             InitializeComponent();
 
             string dir = ConfigurationManager.AppSettings["DicomDir"];
             di = new DirectoryInfo(dir);
+            files = di.GetFiles("*.dcm").ToList();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string pic = ConfigurationManager.AppSettings["PicPath"];
+            bmp = new Bitmap(pic);
         }
 
         private void BtnLoad_Click(object sender, EventArgs e)
         {
-            var files = di.GetFiles("*.dcm");
-
             DicomFile df = new DicomFile(files[0].FullName);
-
             df.Load();
 
             var a = df.DataSet.Count;
@@ -44,10 +46,21 @@ namespace DicomClientForm
             {
                 string desc = item.DicomTagDescription;
                 string value = item.GetString(0, string.Empty);
-                Console.WriteLine($"Desc: {desc}\t\t\t{value}");
+                Console.WriteLine($"Desc: {desc}\t\t{value}");
 
                 Console.WriteLine(item.Tag.Name); 
             }
+
+        }
+
+        private void BtnCreateDicom_Click(object sender, EventArgs e)
+        {
+            //DicomFile df = new DicomFile(files[0].FullName);
+
+            DicomFile df = new DicomFile();
+
+            DicomMessage dm = new DicomMessage(df);
+
         }
     }
 }

@@ -48,7 +48,7 @@ namespace DicomClientForm
                 string value = item.GetString(0, string.Empty);
                 Console.WriteLine($"Desc: {desc}\t\t{value}");
 
-                Console.WriteLine(item.Tag.Name); 
+                Console.WriteLine(item.Tag.Name);
             }
 
         }
@@ -56,11 +56,38 @@ namespace DicomClientForm
         private void BtnCreateDicom_Click(object sender, EventArgs e)
         {
             //DicomFile df = new DicomFile(files[0].FullName);
+            byte[] bytes = new byte[bmp.Width * bmp.Height * 3];
+            int n = -1;
+            for (int i = 1; i <= bmp.Height; i++)
+            {
+                for (int j = 1; j <= bmp.Width; j++)
+                {
+                    Color pixel = bmp.GetPixel(i, j);
+                    bytes[++n] = pixel.R;
+                    bytes[++n] = pixel.G;
+                    bytes[++n] = pixel.B;
+                }
+            }
+
+            //DicomFile file = new DicomFile(files[0].FullName);
 
             DicomFile df = new DicomFile();
 
-            DicomMessage dm = new DicomMessage(df);
+            df.MediaStorageSopClassUid = SopClass.DigitalXRayImageStorageForPresentation.Uid;
+            df.TransferSyntax = TransferSyntax.ExplicitVrLittleEndian;
 
+            df.DataSet[DicomTags.ImageType].SetStringValue(@"ORIGINAL\PRIMARY");
+            df.DataSet[DicomTags.SopClassUid].SetStringValue(SopClass.DigitalXRayImageStorageForPresentation.Uid);
+            df.DataSet[DicomTags.Columns].SetInt32(0, bmp.Width);
+            df.DataSet[DicomTags.Rows].SetInt32(0, bmp.Height);
+            df.DataSet[DicomTags.BitsAllocated].SetInt16(0, 24);//(Rgba*8)(4byte*8=32bit)
+            df.DataSet[DicomTags.BitsStored].SetInt16(0, 24);
+            df.DataSet[DicomTags.HighBit].SetInt16(0, 23);
+            df.DataSet[DicomTags.PixelData].Values = bytes;
+
+            string fileName = DateTime.UtcNow.Timestamp().ToString() + ".dcm";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dicom", fileName);
+            df.Save(filePath);
         }
     }
 }

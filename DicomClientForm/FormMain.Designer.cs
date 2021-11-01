@@ -31,6 +31,7 @@ namespace DicomClientForm
         {
             this.BtnLoad = new System.Windows.Forms.Button();
             this.BtnCreateDicom = new System.Windows.Forms.Button();
+            this.BtnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnLoad
@@ -55,11 +56,23 @@ namespace DicomClientForm
             this.BtnCreateDicom.UseVisualStyleBackColor = true;
             this.BtnCreateDicom.Click += new System.EventHandler(this.BtnCreateDicom_Click);
             // 
+            // BtnTest
+            // 
+            this.BtnTest.AutoSize = true;
+            this.BtnTest.Location = new System.Drawing.Point(699, 21);
+            this.BtnTest.Name = "BtnTest";
+            this.BtnTest.Size = new System.Drawing.Size(75, 23);
+            this.BtnTest.TabIndex = 2;
+            this.BtnTest.Text = "测  试";
+            this.BtnTest.UseVisualStyleBackColor = true;
+            this.BtnTest.Click += new System.EventHandler(this.BtnTest_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnTest);
             this.Controls.Add(this.BtnCreateDicom);
             this.Controls.Add(this.BtnLoad);
             this.Name = "FormMain";
@@ -74,6 +87,7 @@ namespace DicomClientForm
 
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.Button BtnCreateDicom;
+        private System.Windows.Forms.Button BtnTest;
     }
 }
 

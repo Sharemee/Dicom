@@ -44,24 +44,13 @@ namespace ClearCanvas.Dicom
 
         #region Constructors
 
-        internal DicomAttributeMultiValueText(uint tag)
-            : base(tag)
+        internal DicomAttributeMultiValueText(uint tag) : base(tag) { }
+
+        internal DicomAttributeMultiValueText(DicomTag tag) : base(tag) { }
+
+        internal DicomAttributeMultiValueText(DicomTag tag, ByteBuffer item) : base(tag)
         {
-
-        }
-
-        internal DicomAttributeMultiValueText(DicomTag tag)
-            : base(tag)
-        {
-
-        }
-
-        internal DicomAttributeMultiValueText(DicomTag tag, ByteBuffer item)
-            : base(tag)
-        {
-            string valueArray;
-
-            valueArray = item.GetString();
+            string valueArray = item.GetString();
 
             // store the length before removing pad chars
             StreamLength = (uint)valueArray.Length;
@@ -87,8 +76,7 @@ namespace ClearCanvas.Dicom
             }
         }
 
-        internal DicomAttributeMultiValueText(DicomAttributeMultiValueText attrib)
-            : base(attrib)
+        internal DicomAttributeMultiValueText(DicomAttributeMultiValueText attrib) : base(attrib)
         {
             var values = (string[])attrib.Values;
             _values = new string[values.Length];
@@ -262,7 +250,6 @@ namespace ClearCanvas.Dicom
             }
         }
 
-
         public override object Values
         {
             get { return _values; }
@@ -275,9 +262,9 @@ namespace ClearCanvas.Dicom
                     Count = _values.Length == 0 ? 1 : _values.Length;
                     StreamLength = (uint)ToString().Length;
                 }
-                else if (value is string)
+                else if (value is string @string)
                 {
-                    SetStringValue((string)value);
+                    SetStringValue(@string);
                 }
                 else
                 {
@@ -300,8 +287,6 @@ namespace ClearCanvas.Dicom
 
             return bb;
         }
-
-
 
         /// <summary>
         /// Retrieve a value in the attribute 
@@ -329,9 +314,7 @@ namespace ClearCanvas.Dicom
         /// <example>
         ///     DicomAttributeDT attr = new DicomAttributeDT(DicomTagDictionary.GetDicomTag(DicomTags.AccessionNumber));
         ///     attr.SetStringValue("20001012122213.123456\\20001012120013.123456");
-        /// 
         /// </example>
-        ///
         public override void SetStringValue(string stringValue)
         {
             if (stringValue == null || stringValue.Length == 0)
@@ -365,9 +348,7 @@ namespace ClearCanvas.Dicom
         /// 
         ///     DicomAttributeUS attrib = new DicomAttributeUS(DicomTagDictionary.GetDicomTag(DicomTags.SelectorUsValue));
         ///     attrib.SetString(0, "-1000"); // will throw DicomDataException (US VR can only hold value in the range 0..2^16
-        /// 
         /// </example>
-        ///
         public override void SetString(int index, string value)
         {
             ValidateString(value);
@@ -382,7 +363,6 @@ namespace ClearCanvas.Dicom
 
         /// <summary>
         /// Append a value from a string.
-        /// 
         /// </summary>
         /// <param name="value"></param>
         /// <exception cref="DicomDataException">If <i>stringValue</i> cannot values that cannot be convert into the attribute VR</exception>
@@ -390,10 +370,8 @@ namespace ClearCanvas.Dicom
         /// <example>
         ///     DicomAttributeDT attr = new DicomAttributeDT(DicomTagDictionary.GetDicomTag(DicomTags.AccessionNumber));
         ///     attr.AppendString("20001012122213.123456");
-        /// 
         ///     DicomAttributeUS attrib = new DicomAttributeUS(DicomTagDictionary.GetDicomTag(DicomTags.SelectorUsValue));
         ///     attrib.AppendString("-1000"); // will throw DicomDataException (US VR can only hold value in the range 0..2^16
-        /// 
         /// </example>      
         public override void AppendString(string stringValue)
         {
@@ -1989,31 +1967,18 @@ namespace ClearCanvas.Dicom
     {
         #region Constructors
 
-        public DicomAttributePN(uint tag)
-            : base(tag)
-        {
+        public DicomAttributePN(uint tag) : base(tag) { }
 
-        }
-
-        public DicomAttributePN(DicomTag tag)
-            : base(tag)
+        public DicomAttributePN(DicomTag tag) : base(tag)
         {
             if (!tag.VR.Equals(DicomVr.PNvr)
              && !tag.MultiVR)
                 throw new DicomException(SR.InvalidVR);
-
         }
 
-        internal DicomAttributePN(DicomTag tag, ByteBuffer item)
-            : base(tag, item)
-        {
-        }
+        internal DicomAttributePN(DicomTag tag, ByteBuffer item) : base(tag, item) { }
 
-
-        internal DicomAttributePN(DicomAttributePN attrib)
-            : base(attrib)
-        {
-        }
+        internal DicomAttributePN(DicomAttributePN attrib) : base(attrib) { }
 
         #endregion
 

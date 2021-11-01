@@ -190,7 +190,7 @@ namespace ClearCanvas.Dicom
         /// <value>The dump string.</value>
         public string DumpString
         {
-            get { return Dump(String.Empty, DicomDumpOptions.None); }
+            get { return Dump(string.Empty, DicomDumpOptions.None); }
         }
 
         public bool ValidateVrLengths { get; set; }

@@ -825,7 +825,7 @@ namespace ClearCanvas.Dicom
             sb.AppendFormat("({0:x4},{1:x4}) {2} ", Tag.Group, Tag.Element, Tag.VR.Name);
             if (Count == 0)
             {
-                String value = "(no value available)";
+                string value = "(no value available)";
                 sb.Append(value.PadRight(ValueWidth, ' '));
             }
             else

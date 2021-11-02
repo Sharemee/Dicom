@@ -65,7 +65,6 @@ namespace DicomClientForm
 
         private void BtnCreateDicom_Click(object sender, EventArgs e)
         {
-            //DicomFile df = new DicomFile(files[0].FullName);
             byte[] bytes = new byte[bmp.Width * bmp.Height * 3];
             int n = -1;
             for (int i = 0; i < bmp.Height; i++)
@@ -82,17 +81,25 @@ namespace DicomClientForm
             DicomFile file = new DicomFile(files[0].FullName);
             file.Load();
 
+            string fileName = DateTime.UtcNow.Timestamp().ToString() + ".dcm";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dicom", fileName);
             DicomFile df = new DicomFile();
 
             df.MediaStorageSopClassUid = SopClass.DigitalXRayImageStorageForPresentation.Uid;
             df.TransferSyntax = TransferSyntax.ExplicitVrLittleEndian;
 
             #region 开始文件Tag内容替换
-            var obj = file.DataSet[DicomTags.PatientsName];
-            //df.DataSet[DicomTags.PatientsName].SetStringValue()
+            df.DataSet[DicomTags.SpecificCharacterSet] = file.DataSet[DicomTags.SpecificCharacterSet];
+            df.DataSet[DicomTags.PatientsName] = file.DataSet[DicomTags.PatientsName];
+            df.DataSet[DicomTags.StudyInstanceUid] = file.DataSet[DicomTags.StudyInstanceUid];
+            df.DataSet[DicomTags.InstanceCreationDate] = file.DataSet[DicomTags.InstanceCreationDate];
+            df.DataSet[DicomTags.InstanceCreationTime] = file.DataSet[DicomTags.InstanceCreationTime];
+            df.DataSet[DicomTags.Modality] = file.DataSet[DicomTags.Modality];
+
 
             df.DataSet[DicomTags.SeriesNumber].SetInt32(0, 10003); //file.DataSet[DicomTags.SeriesNumber];
             df.DataSet[DicomTags.InstanceNumber].SetInt32(0, 1);
+
             #endregion
 
             df.DataSet[DicomTags.ImageType].SetStringValue(@"ORIGINAL\PRIMARY");
@@ -104,8 +111,7 @@ namespace DicomClientForm
             df.DataSet[DicomTags.HighBit].SetInt16(0, 23);
             df.DataSet[DicomTags.PixelData].Values = bytes;
 
-            string fileName = DateTime.UtcNow.Timestamp().ToString() + ".dcm";
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dicom", fileName);
+            
             df.Save(filePath);
         }
 
@@ -114,7 +120,6 @@ namespace DicomClientForm
             DicomFile file = new DicomFile(files[0].FullName);
             file.Load();
 
-            var obj = file.DataSet[DicomTags.PatientsName];
 
         }
     }
